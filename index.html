@@ -1,0 +1,384 @@
+<!doctype html><html lang="de"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Umkehrfunktionstrainer</title><link rel="apple-touch-icon" href="apple-touch-icon.png"><link rel="icon" type="image/png" href="apple-touch-icon.png"><meta name="apple-mobile-web-app-title" content="Umkehrfunktionen"><style>body{font-family:system-ui,Arial;background:#f3f6fb;color:#18283c;margin:0}main{max-width:950px;margin:24px auto;padding:22px;background:white;border-radius:18px;box-shadow:0 4px 22px #1a36521a}h1{margin-top:0}[hidden]{display:none!important}button,input,select{font:inherit;padding:10px;border-radius:9px;border:1px solid #9aacc2}button{cursor:pointer;background:#e8f0fb}button.primary{background:#1768c4;color:white;border:0}button#know{background:#218838;color:#fff;border:1px solid #176b2b;font-weight:700}button#know:hover{background:#176b2b}button#showSteps{background:#218838;color:white;border:1px solid #176b2b;font-weight:700}button#showSteps:hover{background:#176b2b}.step-line{margin:12px 0;line-height:1.8}.step-line .radical{vertical-align:middle}nav{display:flex;gap:10px;flex-wrap:wrap}nav button.active{background:#1768c4;color:white}.panel{background:#f5f8fe;padding:18px;border-radius:12px;margin-top:16px}.eq{font-size:1.35rem;font-weight:650;margin:15px 0}.row{display:flex;gap:12px;flex-wrap:wrap;align-items:center}input{width:min(420px,90%)}.visual-input{min-height:30px;min-width:260px;flex:1;background:white;border:1px solid #9aacc2;border-radius:9px;padding:10px;font-size:1.4rem;outline-offset:2px;white-space:nowrap;overflow-x:auto}.visual-input .frac{font-size:1em}.visual-input .radical{display:inline-flex;vertical-align:middle}.visual-input .radicand{display:inline-block;min-width:1.5em;min-height:1.3em}.visual-input .num,.visual-input .den{display:block;min-width:1.5em;min-height:1.1em}.visual-input .root-svg{height:2em}.visual-input .slot:empty:before{content:"□";color:#a5b4c5;pointer-events:none}.mathkeys{display:flex;flex-wrap:wrap;gap:7px;margin:12px 0}.mathkeys button{min-width:43px;padding:9px 11px;background:#e5eefb;border:1px solid #b7c9df;font-weight:650}.mathkeys button:hover{background:#cddff7}.mathkeys button:active{background:#accbf3}.mathkeys button sup{font-size:.7em}.mathkeys .wide{min-width:72px}.scoreline{margin-top:10px;color:#52677d;font-weight:600}.feedback{margin-top:16px;padding:14px;border-radius:10px;min-height:28px;background:#edf2fa}.ok{background:#d9f4df}.bad{background:#fff0d8}.domain-warning{color:#b42318;font-weight:700;margin-top:10px;min-height:0}dialog{max-width:650px;border:0;border-radius:15px;box-shadow:0 12px 45px #0004;padding:26px}dialog::backdrop{background:#0008}small{color:#52677d}.hint{color:#52677d}.frac{display:inline-flex;flex-direction:column;vertical-align:middle;text-align:center;line-height:1.2;font-size:.95em;margin:0 .15em}.frac .num{border-bottom:1.6px solid currentColor;padding:0 .25em .13em}.frac .den{padding:.13em .25em 0}.math-expression{display:inline-flex;align-items:center;gap:.12em;flex-wrap:wrap}.radical{display:inline-flex;align-items:center}.radical .radicand{border-top:1.5px solid currentColor;padding:.13em .1em 0}.radical .rootindex{font-size:.6em;align-self:flex-start;margin-right:-.08em}.root-svg{height:2.5em;width:1.05em;flex:none;overflow:visible}.radical .radicand{border-top:2px solid currentColor;padding:.16em .1em 0;margin-left:-.04em}.radical{vertical-align:middle}header{background:#12365b;color:white;padding:25px max(20px,calc(50vw - 480px));display:flex;align-items:center;gap:18px}header h1{margin:0 0 5px;font-size:29px}header p{margin:0}.logo{width:64px;height:64px;border-radius:15px;flex-shrink:0;box-shadow:0 2px 8px rgba(0,0,0,.2)}@media(max-width:560px){.logo{width:48px;height:48px;border-radius:11px}header h1{font-size:24px}}</style><header><img class="logo" src="apple-touch-icon.png" alt=""><div><h1>Umkehrfunktionstrainer</h1><p>Klasse 10 · Emil-Petri-Schule Arnstadt</p></div></header><main><nav><button id="m0" class="active">1 · Umkehrfunktionen kennenlernen</button><button id="m1">2 · Umkehrfunktion bilden</button><button id="m2">3 · Definitionsbereich</button><button id="know">Wissen</button></nav><div class="panel"><div class="row"><label>Funktionstyp <select id="kind"><option value="mix">Gemischt</option><option value="linear">Lineare Funktionen</option><option value="quadratic">Quadratische Funktionen</option><option value="power">Andere Potenzfunktionen</option></select></label></div><div id="task" class="eq"></div><div id="context" class="hint"></div><section id="s0">
+<p id="branchIntro" class="hint"></p><div id="branches" class="row"></div>
+<div class="row" style="margin:14px 0"><button id="reveal" class="primary">Funktionsterm der Umkehrfunktion anzeigen</button><button id="introNext">Neue Aufgabe</button></div>
+<div class="row"><div id="introInverse" class="eq" aria-live="polite"></div><button id="showSteps" hidden>Umstellung anzeigen</button></div>
+<svg id="introGraph" viewBox="0 0 660 440" style="display:block;width:100%;max-width:660px;background:white;border:1px solid #cbd6e5;border-radius:10px" role="img" aria-label="Graph der Ausgangsfunktion und ihrer Umkehrfunktion"></svg>
+<p class="hint">Schwarz: f(x) &nbsp; <span style="color:#c72532">Rot: f̅(x)</span> &nbsp; Grau gestrichelt: Symmetrieachse (y = x)</p>
+</section><section id="s1"><p><strong>Gib bitte den Funktionsterm ein.</strong></p><div class="row"><span class="eq" style="margin:0">f̅(x) =</span><div id="answerVisual" class="visual-input" contenteditable="true" role="textbox" aria-label="Term der Umkehrfunktion" spellcheck="false"></div><input id="answer" type="hidden"></div><p class="hint" style="margin:8px 0 0">Bitte statt des Bruchstrichs das Divisionszeichen ÷ verwenden.</p><div id="domainWarning" class="domain-warning" role="alert"></div></section><section id="s2" hidden>
+<p><strong>Bestimme den Definitionsbereich der Umkehrfunktion.</strong></p>
+<p>Wähle eine Schreibweise:</p>
+<div class="row"><label><input type="radio" name="domainNotation" value="interval" checked> Intervallschreibweise</label><label><input type="radio" name="domainNotation" value="set"> Mengenschreibweise</label></div>
+<div id="intervalArea"><p>Intervallschreibweise:</p><div class="row"><span>D =</span><input id="interval" placeholder="z. B. [2;∞) oder (−∞;3]"></div></div>
+<div id="setArea" hidden><p>Mengenschreibweise:</p><div class="row"><span>D =</span><input id="set" style="flex:1;max-width:650px" placeholder="z. B. ℝ oder {x | x ∈ ℝ ∧ x ≥ 2}"></div><small>Nutze die Tasten {x | x ∈ ℝ, ∧ und } für eine Mengenbeschreibung oder gib ℝ direkt ein.</small></div>
+</section><div id="mathkeys" class="mathkeys" aria-label="Mathematische Eingabetasten"></div><div class="row"><button id="check" class="primary">Prüfen</button><button id="next">Neue Aufgabe</button></div><div class="scoreline" id="score"></div><div id="domainGraphArea" hidden style="margin-top:18px"><button id="showDomainGraph" class="primary" type="button">Funktion grafisch anzeigen</button><div id="domainGraphPanel" hidden><p class="hint">Schwarz: Ausgangsfunktion f(x) &nbsp; <span style="color:#c72532">Rot: Umkehrfunktion f̅(x)</span> &nbsp; Grau gestrichelt: y = x</p><svg id="domainGraph" viewBox="0 0 660 440" style="display:block;width:100%;max-width:660px;background:white;border:1px solid #cbd6e5;border-radius:10px" role="img" aria-label="Graphen der Ausgangsfunktion und der Umkehrfunktion"></svg></div></div><div id="feedback" class="feedback" aria-live="polite"></div></div><dialog id="dialog"><h2>Wissen: Umkehrfunktionen</h2><p>Eine Umkehrfunktion macht die Zuordnung rückgängig. Vorgehen:</p><ol><li>Schreibe <strong>y = f(x)</strong>.</li><li><strong>Vertausche x und y.</strong></li><li>Löse die neue Gleichung nach <strong>y</strong> auf.</li><li>Schreibe das Ergebnis als <strong>f̅(x)</strong>.</li></ol><p>Beispiel: y = 2x + 3 → x = 2y + 3 → y = (x − 3)/2. Also f̅(x) = <span class="frac"><span class="num">x − 3</span><span class="den">2</span></span>.</p><p><strong>Achtung:</strong> <strong style="color:#c62828">Potenzfunktionen mit geraden Exponenten sind auf ganz ℝ nicht umkehrbar.</strong> <strong>Sie haben einen positiven und einen negativen Ast.</strong><br>Beispiel: f(x)=x². Mit D=[0;∞) gilt f̅(x)=√x. Für D=(-∞;0] gilt f̅(x)=−√x.<br><strong style="color:#c62828">Der Definitionsbereich der Umkehrfunktion ist der Wertebereich von f(x).</strong></p><button id="close">Schließen</button></dialog><dialog id="stepsDialog"><h2>Umstellung zur Umkehrfunktion</h2><div id="stepsContent"></div><button id="closeSteps">Schließen</button></dialog><footer style="text-align:right;font-size:1rem;color:#52677d;margin-top:22px">Erstellt von Marion Klugmann (Oktober 2026) mit freundlicher Unterstützung von ChatGPT und Claude.</footer></main><script>
+const $=id=>document.getElementById(id);let mode=0,task=null,tries=0,correct=0,total=0;const PROGRESS_KEY='umkehrfunktionen_adaptiv_v1';
+const STATS_KEY='umkehrfunktionen_modulstatistik_v1';
+let moduleStats={1:{solved:0,correct:0},2:{solved:0,correct:0}};
+try{const stored=JSON.parse(localStorage.getItem(STATS_KEY));for(const m of [1,2])if(stored?.[m])moduleStats[m]={solved:Number(stored[m].solved)||0,correct:Number(stored[m].correct)||0}}catch(e){}
+function saveStats(){try{localStorage.setItem(STATS_KEY,JSON.stringify(moduleStats))}catch(e){}}
+function updateStats(){const m=moduleStats[mode];if(!m)return;const pct=m.solved?100*m.correct/m.solved:0;$('score').innerHTML=`<div>Anzahl gelöster Aufgaben: <strong>${m.solved}</strong></div><div>Anzahl der richtigen Aufgaben: <strong>${m.correct}</strong></div><div>Richtig in Prozent: <strong>${pct.toLocaleString('de-DE',{maximumFractionDigits:1})} %</strong></div>`}
+function recordResult(isCorrect){if(mode!==1&&mode!==2)return;moduleStats[mode].solved++;if(isCorrect)moduleStats[mode].correct++;saveStats();updateStats()}
+let progress={1:{},2:{}};
+try{const saved=JSON.parse(localStorage.getItem(PROGRESS_KEY));if(saved&&saved[1]&&saved[2])progress=saved}catch(e){}
+function saveProgress(){try{localStorage.setItem(PROGRESS_KEY,JSON.stringify(progress))}catch(e){}}
+function groupFor(n){return n===1?'linear':n===2?'quadratic':n===3?'cubic':'quartic'}
+function taskKey(t){return [t.n,t.a,t.v,t.n%2===0?t.side:1].join(':')}
+function groupRecord(m,g){return progress[m][g]||(progress[m][g]={mastered:[],solved:[]})}
+function mastered(m,g){return groupRecord(m,g).mastered.length>=5}
+function recordSuccess(){const g=groupFor(task.n),r=groupRecord(mode,g),key=taskKey(task);if(!r.solved.includes(key))r.solved.push(key);if(tries===1&&!r.mastered.includes(key))r.mastered.push(key);saveProgress()}
+function eligible(t){if(mode===0)return true;const g=groupFor(t.n),r=groupRecord(mode,g);return !mastered(mode,g)&&!r.solved.includes(taskKey(t))}
+function availableGroups(){const all=['linear','quadratic','cubic','quartic'];const selected=$('kind').value;return all.filter(g=>(selected==='mix'||selected==='power'&&['cubic','quartic'].includes(g)||selected==='linear'&&g==='linear'||selected==='quadratic'&&g==='quadratic')&&(mode===0||!mastered(mode,g)))}
+const ri=(a,b)=>Math.floor(Math.random()*(b-a+1))+a;const pick=a=>a[ri(0,a.length-1)];const fmt=n=>n<0?`(${n})`:String(n);function make(){
+ const groups=availableGroups();
+ if(!groups.length){task=null;$('task').innerHTML='Alle Aufgabentypen dieser Auswahl sind erfolgreich abgeschlossen. <button id="resetProgress" type="button" style="font-size:1rem;font-weight:400">Noch einmal üben</button>';$('resetProgress').onclick=()=>{progress[mode]={};saveProgress();make()};$('context').textContent='';$('s0').hidden=$('s1').hidden=$('s2').hidden=true;$('mathkeys').hidden=true;$('feedback').hidden=true;return}
+ let chosen=null;
+ for(let j=0;j<700;j++){
+ const g=pick(groups),n=g==='linear'?1:g==='quadratic'?2:g==='cubic'?3:4;
+ const a=pick([-3,-2,-1,1,2,3]),v=ri(-5,5),side=n%2===0?pick([1,-1]):1;
+ const t={k:g,a,h:0,v,n,side,expression:`${a===1?'':a===-1?'−':a<0?'−'+(-a):a}x^${n}`.replace('x^1','x')+(v===0?'':v>0?` + ${v}`:` − ${-v}`),inv:n===1?`(x-${v})/${a}`:`${side===-1?'-':''}root((x-${v})/${a},${n})`,domain:n%2===0?(side===1?'right':'left'):'all',fun:x=>a*Math.pow(x,n)+v,inverse:x=>n%2===0?side*Math.pow((x-v)/a,1/n):Math.sign((x-v)/a)*Math.pow(Math.abs((x-v)/a),1/n)};
+ if(eligible(t)){chosen=t;break}
+ }
+ if(!chosen){$('task').textContent='Für diese Auswahl sind keine weiteren Aufgaben verfügbar.';return}
+ task=chosen;
+ tries=0;$('domainGraphArea').hidden=true;$('domainGraphPanel').hidden=true;$('answer').value=$('interval').value=$('set').value='';$('answerVisual').innerHTML='';$('feedback').textContent='';$('domainWarning').textContent='';render()}
+function domText(){return task.domain==='all'?'D = ℝ':task.domain==='right'?`D = [${task.h}; ∞)`:`D = (−∞; ${task.h}]`}function inverseDisplay(){let t=task;if(t.k==='linear')return `(x ${t.v<0?'+ '+(-t.v):t.v>0?'− '+t.v:''}) / ${t.a}`;let rad=`(x ${t.v<0?'+ '+(-t.v):t.v>0?'− '+t.v:''}) / ${t.a}`;let root=t.n===2?`√(${rad})`:`${t.n}√(${rad})`;return `${t.h} ${t.side===-1?'−':'+'} ${root}`.replace(/^0 \+ /,'').replace(/^0 − /,'−')}
+function fractionHTML(num,den){return `<span class="frac"><span class="num">${prettyMath(String(num))}</span><span class="den">${prettyMath(String(den))}</span></span>`}
+function inverseHTML(){
+ const t=task, numerator=t.v===0?'x':t.v>0?`x + ${-t.v}`:`x + ${-t.v}`;
+ const numeratorText=t.v===0?'x':t.v>0?`x − ${t.v}`:`x + ${-t.v}`;
+ const original=fractionHTML(numeratorText,t.a);
+ const gcd=(a,b)=>b?gcd(b,a%b):Math.abs(a);
+ const coeff=(num,den)=>{const g=gcd(Math.abs(num),Math.abs(den));num/=g;den/=g;let sign=num*den<0?'−':'';num=Math.abs(num);den=Math.abs(den);return (den===1?(num===1?'':String(num)):fractionHTML(num,den))};
+ const constant=(num,den)=>{if(!num)return '';const g=gcd(Math.abs(num),Math.abs(den));let n=Math.abs(num)/g,d=Math.abs(den)/g;return ` ${num*den<0?'−':'+'} ${d===1?n:fractionHTML(n,d)}`};
+ if(t.n===1){
+  const a=t.a,v=t.v,linear=(a<0?'−':'')+coeff(1,Math.abs(a))+'x'+constant(-v,a);
+  if(Math.abs(a)===1)return linear;
+  return original+' = '+linear;
+ }
+ const signedFraction=(num,den)=>{
+  const g=gcd(Math.abs(num),Math.abs(den));
+  const n=Math.abs(num)/g,d=Math.abs(den)/g;
+  return (num*den<0?'−':'')+(d===1?String(n):fractionHTML(n,d));
+ };
+ const expandedRadicand=()=>{
+  const a=t.a,v=t.v;
+  const first=(a<0?'−':'')+(Math.abs(a)===1?'x':fractionHTML(1,Math.abs(a))+'x');
+  if(v===0)return first;
+  const constant=signedFraction(-v,a);
+  if(a<0){
+   const xpart=Math.abs(a)===1?'x':fractionHTML(1,Math.abs(a))+'x';
+   return '−'+xpart+(v>0?' + ':' − ')+signedFraction(Math.abs(v),Math.abs(a));
+  }
+  return first+(v*a>0?' − ':' + ')+signedFraction(Math.abs(v),Math.abs(a));
+ };
+ const root=(inside)=>`<span class="radical">${t.n===2?'':`<span class="rootindex">${t.n}</span>`}<svg class="root-svg" viewBox="0 0 22 52" preserveAspectRatio="none" aria-hidden="true"><path d="M1 27 L6 24 L12 46 L20 3 L22 3" fill="none" stroke="currentColor" stroke-width="2.7" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="radicand">${inside}</span></span>`;
+ const sign=t.n%2===0&&t.side===-1?'−':'';
+ const simple=expandedRadicand();
+ if(Math.abs(t.a)===1)return sign+root(simple);
+ return sign+root(original)+' = '+sign+root(simple);
+}
+function inverseSolutionHTML(){
+ const t=task,n=t.n,a=t.a,v=t.v;
+ const swapped=prettyMath(t.expression.replaceAll('x','y'));
+ const numerator=v===0?'x':v>0?`x − ${v}`:`x + ${-v}`;
+ const divided=a===1?prettyMath(numerator):fractionHTML(numerator,a);
+ const isolated=a<0?('−'+(Math.abs(a)===1?'x':fractionHTML(1,Math.abs(a))+'x')+(v===0?'':(v>0?' + ':' − ')+(Math.abs(a)===1?String(Math.abs(v)):(Math.abs(v)%Math.abs(a)===0?String(Math.abs(v)/Math.abs(a)):fractionHTML(Math.abs(v),Math.abs(a)))))):divided;
+ const rootHTML=(inside)=>`<span class="radical">${n===2?'':`<span class="rootindex">${n}</span>`}<svg class="root-svg" viewBox="0 0 22 52" preserveAspectRatio="none" aria-hidden="true"><path d="M1 27 L6 24 L12 46 L20 3 L22 3" fill="none" stroke="currentColor" stroke-width="2.7" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="radicand">${inside}</span></span>`;
+ let steps=`<strong>Vollständige Lösung:</strong><br>1. Ausgangsgleichung: y = ${prettyMath(t.expression)}<br>2. x und y vertauschen: x = ${swapped}<br>`;
+ let i=3;
+ if(v!==0){
+  steps+=`${i++}. Absolutes Glied beseitigen: x = ${swapped} &nbsp; | ${v>0?'− '+v:'+ '+(-v)}<br>`;
+  steps+=`&emsp;${prettyMath(numerator)} = ${a===1?'':a===-1?'−':a}y${n===1?'':`<sup>${n}</sup>`}<br>`;
+ }
+ if(a!==1){steps+=`${i++}. Durch den Faktor ${a<0?'('+'−'+(-a)+')':a} teilen: &nbsp; | : ${a<0?'('+'−'+(-a)+')':a}<br>`;
+ steps+=`&emsp;${n===1?'y':`y<sup>${n}</sup>`} = ${divided}<br>`;}
+ if(a<0)steps+=`${i++}. Negativen Nenner auflösen: ${n===1?'y':`y<sup>${n}</sup>`} = ${isolated}<br>`;
+ if(n===1){steps+=`${i++}. Vereinfachen: <strong>f̅(x) = ${inverseHTML()}</strong>`;}
+ else{
+  steps+=`${i++}. ${n===2?'Quadratwurzel':n===3?'Dritte Wurzel':'Vierte Wurzel'} ziehen: &nbsp; | ${n===2?'√':`<sup>${n}</sup>√`}<br>`;
+  steps+=`&emsp;y = ${n%2===0?'±':''}${rootHTML(isolated)}<br>`;
+  if(n%2===0){steps+=`${i++}. Definitionsbereich berücksichtigen: ${domText()}. ${t.side===-1?'Da y ≤ 0, wird der negative Zweig gewählt.':'Da y ≥ 0, wird der positive Zweig gewählt.'}<br>`;}
+  steps+=`${i}. Umkehrfunktion: <strong>f̅(x) = ${inverseHTML()}</strong>`;
+ }
+ return steps;
+}
+function prettyMath(s){return s.replace(/\^(\d+)/g,(_,n)=>'<sup>'+n+'</sup>')}function render(){$('s0').hidden=mode!==0;$('task').innerHTML=`f(x) = ${prettyMath(task.expression)}`;$('context').innerHTML=mode===0?(task.n%2===0?'':`Definitionsbereich: D = ℝ`):mode===1?(`Definitionsbereich: ${domText()}`):`Umkehrfunktion: f̅(x) = ${inverseHTML()}`;$('s1').hidden=mode!==1;$('s2').hidden=mode!==2;lastMathInput=mode!==2?$('answerVisual'):(document.querySelector('input[name="domainNotation"]:checked')?.value==='set'?$('set'):$('interval'));$('mathkeys').hidden=mode===0;$('check').parentElement.hidden=mode===0;$('score').hidden=mode===0;$('feedback').hidden=mode===0;if(mode===0)renderIntro();else if(mode===2)updateNotation();else renderKeys();updateStats()}
+function mathParse(source){
+ let s=String(source).toLowerCase().replace(/[−–]/g,'-').replace(/÷/g,'/').replace(/×/g,'*').replace(/\s/g,'').replace(/\^/g,'**');
+ s=s.replace(/√\(/g,'sqrt(');
+ // Bruchkoeffizienten wie 1/3x oder -2/5x bedeuten (1/3)*x.
+ s=s.replace(/(\d+(?:\.\d+)?\/\d+(?:\.\d+)?)(?=x\b)/g,'($1)*');
+ s=s.replace(/(\d|x|\))(?=sqrt\(|cbrt\(|root\()/g,'$1*');
+ s=s.replace(/(\d|\))(?=x\b)/g,'$1*');
+ s=s.replace(/(\d|x|\))(?=\()/g,'$1*');
+ s=s.replace(/\)(?=\d)/g,')*');
+ if(!/^[0-9x+\-*/(),.a-z]*$/.test(s))throw Error('Ungültige Zeichen');
+ if(/\b(?!x\b|sqrt\b|cbrt\b|root\b)[a-z]+\b/.test(s))throw Error('Unbekannte Funktion');
+ const f=new Function('x','sqrt','cbrt','root',`return (${s})`);
+ return (x,sqrt,cbrt,root)=>f(x,sqrt,cbrt,root);
+}
+function root(z,n){return n%2?Math.sign(z)*Math.pow(Math.abs(z),1/n):z<0?NaN:Math.pow(z,1/n)}
+function testExpr(){
+ const raw=serializeMath($('answerVisual'));
+ const f=mathParse(raw),t=task;
+ const samples=t.n%2===0?[0,0.25,0.5,1,1.5,2,3,4,5]:[-4,-2,-1,-0.5,0,0.5,1,2,4];
+ for(const q of samples){
+  const originalX=t.n%2===0?t.side*q:q;
+  const inverseX=t.fun(originalX);
+  const actual=f(inverseX,Math.sqrt,Math.cbrt,root);
+  if(!Number.isFinite(actual)||Math.abs(actual-originalX)>1e-6*Math.max(1,Math.abs(originalX)))return false;
+ }
+ return true;
+}
+
+function wrongBranchOnly(){
+ if(mode!==1||task.n%2!==0)return false;
+ try{
+  const f=mathParse(serializeMath($('answerVisual')));
+  for(const x of [0,1,2,3]){
+   const y=task.fun(task.side*x);
+   const got=f(y,Math.sqrt,Math.cbrt,root);
+   if(!Number.isFinite(got)||Math.abs(got+task.side*x)>1e-5*Math.max(1,x))return false;
+  }
+  return true;
+ }catch(e){return false}
+}
+function clean(s){return s.toLowerCase().replace(/\s/g,'').replace(/−/g,'-').replace(/∞/g,'inf').replace(/\\infty/g,'inf').replace(/ℝ|\\mathbb\{r\}/g,'r').replace(/,/g,'.').replace(/≥/g,'>=').replace(/≤/g,'<=').replace(/\{/g,'').replace(/\}/g,'')}
+function testDomains(){
+ const interval=clean($('interval').value),set=clean($('set').value);
+ const bounded=task.n%2===0,lower=task.a>0,b=task.v;
+ const norm=z=>z.replace(/−/g,'-').replace(/\\infty|∞|infinity/g,'inf').replace(/\\mathbb\{r\}|ℝ/g,'r').replace(/\\geq|≥/g,'>=').replace(/\\leq|≤/g,'<=').replace(/\\left|\\right/g,'').replace(/∧|&&/g,'&').replace(/∈/g,'in').replace(/\|/g,'|');
+ const i=norm($('interval').value.toLowerCase().replace(/\s/g,'').replace(/[−–]/g,'-')).replace(/\+inf/g,'inf');
+ // Die Mengenbeschreibung darf vollständig oder als reine Bedingung geschrieben werden.
+ // Bei unbeschränktem Definitionsbereich ist D = ℝ die natürliche Schreibweise.
+ const q=norm($('set').value.toLowerCase().replace(/\s/g,'').replace(/−/g,'-'));
+ const allReal=['r','{x|xinr}','{x|xinr&x=x}','{x|xinr&x∈r}'];
+ if(!bounded)return [['(-inf;inf)','(-inf,inf)'].includes(i),allReal.includes(q)];
+ const intervals=lower?[`[${b};inf)`,`[${b},inf)`]:[`(-inf;${b}]`,`(-inf,${b}]`];
+ const conditions=lower?[`x>=${b}`,`${b}<=x`]:[`x<=${b}`,`${b}>=x`];
+ const setForms=conditions.flatMap(c=>[c,`{x|xinr&${c}}`]);
+ return [intervals.includes(i),setForms.includes(q)];
+}
+function inverseDomainSolution(){
+ if(task.n%2!==0)return {i:'(−∞; ∞)',s:'D = ℝ'};
+ const lower=task.a>0,b=task.v;
+ return {i:lower?`[${b}; ∞)`:`(−∞; ${b}]`,s:`D = {x | x ∈ ℝ ∧ x ${lower?'≥':'≤'} ${b}}`};
+}
+function updateNotation(){
+ const choice=document.querySelector('input[name="domainNotation"]:checked').value;
+ $('intervalArea').hidden=choice!=='interval';$('setArea').hidden=choice!=='set';
+ lastMathInput=choice==='interval'?$('interval'):$('set');
+ renderKeys();
+}
+document.querySelectorAll('input[name="domainNotation"]').forEach(r=>r.addEventListener('change',updateNotation));
+$('check').onclick=()=>{if(!task)return;let ok=false,detail='';try{if(mode===1)ok=testExpr();else{let [a,b]=testDomains();const choice=document.querySelector('input[name="domainNotation"]:checked').value;ok=choice==='interval'?a:b;detail=(!ok&&choice==='interval'&&task.n%2!==0&&clean($('interval').value)==='r')?'Deine Angabe entspricht der Mengenschreibweise.':''}}catch(e){$('domainWarning').textContent='';$('feedback').className='feedback bad';$('feedback').textContent='Die Eingabe konnte technisch nicht ausgewertet werden. Bitte prüfe, ob alle Brüche und Wurzeln vollständig ausgefüllt sind. Dieser Versuch wird nicht als Fehler gezählt.';return}tries++;$('domainWarning').textContent='';if(!ok&&mode===1&&wrongBranchOnly())$('domainWarning').textContent='Der vorgegebene Definitionsbereich wurde nicht beachtet.';if(ok){recordSuccess();recordResult(true);correct++;total++;$('feedback').className='feedback ok';$('feedback').textContent='Richtig! '+(mode===2?'Der Definitionsbereich stimmt.':'Die Umkehrfunktion stimmt.');$('check').disabled=true;setTimeout(()=>{$('check').disabled=false;make()},1600)}else{if(tries>=2){recordResult(false);total++;$('feedback').className='feedback bad';$('feedback').innerHTML=(mode===1?inverseSolutionHTML():`<strong>Vollständige Lösung:</strong><br>Intervallschreibweise: D = ${inverseDomainSolution().i}<br>Mengenschreibweise: ${inverseDomainSolution().s}`);$('check').disabled=true;if(mode===2)$('domainGraphArea').hidden=false}else{$('feedback').className='feedback bad';$('feedback').innerHTML=`Versuche es erneut. (${tries}/2)`+(detail?` <span style="color:#c62828;font-weight:700">${detail}</span>`:'')}}render()};$('next').onclick=()=>{$('check').disabled=false;make()};$('kind').onchange=make;$('m0').onclick=()=>{mode=0;setModeButtons();make()};$('m1').onclick=()=>{mode=1;$('m1').classList.add('active');$('m2').classList.remove('active');setModeButtons();make()};$('m2').onclick=()=>{mode=2;$('m2').classList.add('active');$('m1').classList.remove('active');setModeButtons();make()};$('know').onclick=()=>$('dialog').showModal();$('close').onclick=()=>$('dialog').close();// Mathematische Eingabehilfe: Ziffern kommen von der Gerätetastatur.
+let lastMathInput=$('answerVisual');
+for(const id of ['answerVisual','interval','set']){
+  $(id).addEventListener('focus',()=>{lastMathInput=$(id);renderKeys()});
+  $(id).addEventListener('click',()=>{lastMathInput=$(id);renderKeys()});
+}
+const mathButtons=[
+ ['+','+'],['−','-'],['×','*'],['÷','/'],
+ ['(','('],[')',')'],['x','x'],['x²','^2'],['x³','^3'],['x⁴','^4'],
+ ['√','√()'],['∛','root(,3)'],['∜','root(,4)'],
+ ['≥','≥'],['≤','≤'],['∞','∞'],['ℝ','ℝ'],[';',';']
+];
+function renderKeys(){
+ const domain=lastMathInput!==$('answerVisual');
+ $('mathkeys').innerHTML='';
+ for(const [label,action] of [['◀ Zurück','back'],['Vor ▶','forward'],['⌫ Löschen','delete'],['⇤ Anfang','home']]){const b=document.createElement('button');b.type='button';b.textContent=label;b.classList.add('wide');b.addEventListener('mousedown',e=>e.preventDefault());b.addEventListener('click',()=>editorAction(action));$('mathkeys').appendChild(b)}
+ if(!domain){const signButton=document.createElement('button');signButton.type='button';signButton.textContent='± vor Wurzel';signButton.classList.add('wide');signButton.title='Minuszeichen vor der Wurzel ergänzen oder entfernen';signButton.addEventListener('mousedown',e=>e.preventDefault());signButton.addEventListener('click',toggleRootSign);$('mathkeys').appendChild(signButton)}
+ const separator=document.createElement('div');separator.style.flexBasis='100%';separator.style.height='0';$('mathkeys').appendChild(separator);
+ const setNotation=domain && lastMathInput===$('set');
+ const domainButtons=setNotation?[['ℝ','ℝ'],['{x | x ∈ ℝ','{x | x ∈ ℝ'],['∧',' ∧ '],['}','}'],['(','('],[')',')'],['[','['],[']',']'],...mathButtons.filter(([label])=>!['ℝ','(',')'].includes(label))]:[['ℝ','ℝ'],['(','('],[')',')'],['[','['],[']',']'],...mathButtons.filter(([label])=>!['ℝ','(',')'].includes(label))];
+ for(const [label,value] of (domain?domainButtons:mathButtons)){
+   if(!domain && ['≥','≤','∞','ℝ',';'].includes(label))continue;
+   if(domain && ['x²','x³','x⁴','√','∛','∜','×','÷'].includes(label))continue;
+   const b=document.createElement('button');b.type='button';b.textContent=label;
+   b.addEventListener('mousedown',e=>e.preventDefault());
+   b.addEventListener('click',()=>insertMath(value));
+   $('mathkeys').appendChild(b);
+ }
+}
+function insertMath(value){
+ const el=lastMathInput||$('answerVisual');el.focus();
+ if(el===$('answerVisual')){insertVisual(value);return;}
+ const a=el.selectionStart??el.value.length,b=el.selectionEnd??a;
+ let text=value,caret=a+value.length;
+ if(value==='√()'){caret=a+2}
+ if(value==='root(,3)'||value==='root(,4)'){caret=a+5}
+ if(value==='()/()'){caret=a+1}
+ el.setRangeText(text,a,b,'end');el.setSelectionRange(caret,caret);
+ el.dispatchEvent(new Event('input',{bubbles:true}));
+}
+
+function toggleRootSign(){
+ const host=$('answerVisual');const root=host.querySelector('.radical');if(!root)return;
+ let previous=root.previousSibling;
+ if(previous&&previous.nodeType===3&&/[−-]$/.test(previous.textContent)){
+   previous.textContent=previous.textContent.slice(0,-1);
+   if(!previous.textContent)previous.remove();
+ }else{
+   root.before(document.createTextNode('−'));
+ }
+ host.dispatchEvent(new Event('input',{bubbles:true}));
+ // Keep caret in radicand so editing can continue without needing to navigate out.
+ const inside=root.querySelector('.radicand');if(inside)focusStart(inside);
+}
+function setCursorBefore(node){const host=$('answerVisual'),r=document.createRange(),sel=window.getSelection();r.setStartBefore(node);r.collapse(true);sel.removeAllRanges();sel.addRange(r);host.focus()}
+function setCursorAfter(node){const host=$('answerVisual'),r=document.createRange(),sel=window.getSelection();r.setStartAfter(node);r.collapse(true);sel.removeAllRanges();sel.addRange(r);host.focus()}
+function setCursorEnd(node){const host=$('answerVisual'),r=document.createRange(),sel=window.getSelection();r.selectNodeContents(node);r.collapse(false);sel.removeAllRanges();sel.addRange(r);host.focus()}
+function closestPart(node,cls){let e=node?.nodeType===1?node:node?.parentElement;return e?.closest?.('.'+cls)}
+function editorAction(action){
+ const el=lastMathInput||$('answerVisual');
+ if(el!==$('answerVisual')){el.focus();const a=el.selectionStart,b=el.selectionEnd;if(action==='home')el.setSelectionRange(0,0);else if(action==='back')el.setSelectionRange(Math.max(0,a-1),Math.max(0,a-1));else if(action==='forward')el.setSelectionRange(Math.min(el.value.length,b+1),Math.min(el.value.length,b+1));else if(a!==b)el.setRangeText('',a,b,'end');else if(a>0)el.setRangeText('',a-1,a,'end');return}
+ const host=$('answerVisual');host.focus();if(action==='home'){const first=host.firstChild;if(first)setCursorBefore(first);else setCursorEnd(host);return}const sel=window.getSelection();if(!sel.rangeCount)return;
+ const r=sel.getRangeAt(0),anchor=sel.anchorNode;
+ if(!host.contains(anchor))return;
+ const num=closestPart(anchor,'num'),den=closestPart(anchor,'den'),rad=closestPart(anchor,'radicand');
+ if(action==='forward'||action==='back'){
+  // Cursorbewegung über mehrere Textknoten und mathematische Strukturen hinweg.
+  // DOM-Textknoten können durch die Symboltasten getrennt sein.
+  const direction=action==='forward'?1:-1;
+  if(direction===1&&num){setCursorEnd(num.closest('.frac').querySelector(':scope > .den'));return}
+  if(direction===1&&den){setCursorAfter(den.closest('.frac'));return}
+  if(direction===1&&rad){setCursorAfter(rad.closest('.radical'));return}
+  if(direction===-1&&den){setCursorEnd(den.closest('.frac').querySelector(':scope > .num'));return}
+  if(direction===-1&&num){setCursorBefore(num.closest('.frac'));return}
+  if(direction===-1&&rad){setCursorBefore(rad.closest('.radical'));return}
+  const container=r.startContainer,offset=r.startOffset;
+  if(container.nodeType===3){
+   const nextOffset=offset+direction;
+   if(nextOffset>=0&&nextOffset<=container.length){
+    const nr=document.createRange();nr.setStart(container,nextOffset);nr.collapse(true);sel.removeAllRanges();sel.addRange(nr);return;
+   }
+  }
+  // Find the adjacent text node even when the cursor is at a text-node boundary.
+  const walker=document.createTreeWalker(host,NodeFilter.SHOW_TEXT);
+  const nodes=[];while(walker.nextNode())nodes.push(walker.currentNode);
+  let index=container.nodeType===3?nodes.indexOf(container):-1;
+  if(index<0){
+   const boundary=document.createRange();boundary.setStart(container,offset);boundary.collapse(true);
+   if(direction===1){
+    index=nodes.findIndex(n=>{const nr=document.createRange();nr.selectNodeContents(n);return boundary.compareBoundaryPoints(Range.START_TO_END,nr)<0})-1;
+   }else{
+    index=nodes.findIndex(n=>{const nr=document.createRange();nr.selectNodeContents(n);return boundary.compareBoundaryPoints(Range.START_TO_START,nr)<=0});
+    if(index<0)index=nodes.length;
+   }
+  }
+  const target=nodes[index+direction];
+  if(target){const nr=document.createRange();nr.setStart(target,direction===1?Math.min(1,target.length):Math.max(0,target.length-1));nr.collapse(true);sel.removeAllRanges();sel.addRange(nr)}
+  return;
+ }
+ // Löschen: markierten Bereich entfernen oder vorhergehendes Zeichen/Mathe-Element löschen.
+ if(!r.collapsed){r.deleteContents()}
+ else if(anchor.nodeType===3&&r.startOffset>0){r.setStart(anchor,r.startOffset-1);r.deleteContents()}
+ else{
+  let parent=anchor.nodeType===3?anchor.parentNode:anchor;
+  const index=r.startOffset;
+  let previous=parent.childNodes[index-1];
+  if(!previous&&parent!==host){const structure=parent.closest?.('.frac,.radical');if(structure&&structure!==host){structure.remove();host.dispatchEvent(new Event('input',{bubbles:true}));host.focus();return}}
+  if(previous){if(previous.nodeType===3){previous.textContent=previous.textContent.slice(0,-1);if(!previous.textContent)previous.remove()}else previous.remove()}
+ }
+ host.dispatchEvent(new Event('input',{bubbles:true}));host.focus();
+}
+function serializeMath(el){
+ let out='';
+ for(const node of el.childNodes){
+  if(node.nodeType===3){out+=node.textContent;continue}
+  if(node.nodeType!==1)continue;
+  if(node.classList.contains('frac')){const a=node.querySelector(':scope > .num'),b=node.querySelector(':scope > .den');out+='(('+serializeMath(a)+')/('+serializeMath(b)+'))'}
+  else if(node.classList.contains('radical')){const r=node.querySelector(':scope > .radicand');out+='root(('+serializeMath(r)+'),'+(node.dataset.degree||2)+')'}
+  else if(node.tagName==='SUP')out+='^('+serializeMath(node)+')';
+  else if(node.tagName==='BR')continue;
+  else out+=serializeMath(node);
+ }
+ return out.replace(/\u200b/g,'');
+}
+function focusStart(node){
+ const r=document.createRange();r.selectNodeContents(node);r.collapse(true);
+ const sel=window.getSelection();sel.removeAllRanges();sel.addRange(r);node.focus();
+}
+function insertVisual(value){
+ const host=$('answerVisual');host.focus();let sel=window.getSelection(),range;
+ if(sel.rangeCount&&host.contains(sel.anchorNode)){range=sel.getRangeAt(0)}else{range=document.createRange();range.selectNodeContents(host);range.collapse(false)}
+ range.deleteContents();
+ let node,focusNode=null;
+ if(value==='()/()'){
+  node=document.createElement('span');node.className='frac';
+  node.innerHTML='<span class="num slot"></span><span class="den slot"></span>';
+  focusNode=node.querySelector('.num');
+ }else if(['√()','root(,3)','root(,4)'].includes(value)){
+  const degree=value==='√()'?2:value==='root(,3)'?3:4;
+  node=document.createElement('span');node.className='radical';node.dataset.degree=degree;
+  
+  node.innerHTML=(degree===2?'':`<span class="rootindex">${degree}</span>`)+
+   '<svg class="root-svg" viewBox="0 0 22 52" preserveAspectRatio="none" aria-hidden="true"><path d="M1 27 L6 24 L12 46 L20 3 L22 3" fill="none" stroke="currentColor" stroke-width="2.7" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="radicand slot" contenteditable="true"></span>';
+  focusNode=node.querySelector('.radicand');
+ }else if(['^2','^3','^4'].includes(value)){
+  node=document.createElement('sup');node.textContent=value.slice(1);
+ }else{node=document.createTextNode(value)}
+ if(node.classList?.contains('frac')){
+  node.querySelectorAll('.slot').forEach(x=>x.setAttribute('contenteditable','true'));
+ }
+ range.insertNode(node);
+ if(focusNode){focusStart(focusNode)}
+ else{range.setStartAfter(node);range.collapse(true);sel.removeAllRanges();sel.addRange(range)}
+ host.dispatchEvent(new Event('input',{bubbles:true}));
+}
+$('answerVisual').addEventListener('input',()=>{$('answer').value=serializeMath($('answerVisual'))});
+
+
+let introShown=false;
+function setModeButtons(){for(let i=0;i<3;i++)$('m'+i).classList.toggle('active',mode===i)}
+function renderIntro(){
+ introShown=false;$('introInverse').innerHTML='';$('showSteps').hidden=true;
+ const even=task.n%2===0;
+ if(even){
+  task.introChosen=false;
+  $('context').textContent='';
+  $('branchIntro').textContent='Wähle zuerst den Definitionsbereich der Ausgangsfunktion:';
+  $('reveal').disabled=true;
+  $('branches').innerHTML='';
+  for(const [side,label] of [[1,'D = [0; ∞)'],[-1,'D = (−∞; 0]']]){
+   const b=document.createElement('button');b.textContent=label;
+   b.onclick=()=>{
+    task.side=side;task.domain=side===1?'right':'left';task.introChosen=true;
+    $('context').textContent='Definitionsbereich: '+domText();
+    $('branches').querySelectorAll('button').forEach(x=>x.classList.toggle('primary',x===b));
+    $('introInverse').innerHTML='';$('showSteps').hidden=true;introShown=false;$('reveal').disabled=false;drawIntroGraph();
+   };
+   $('branches').appendChild(b);
+  }
+ }else{
+  task.introChosen=true;$('context').textContent='Definitionsbereich: D = ℝ';
+  $('branchIntro').textContent='';$('branches').innerHTML='';$('reveal').disabled=false;
+ }
+ drawIntroGraph();
+}
+function drawIntroGraph(targetSvg,forceInverse=false){
+ const svg=targetSvg||$('introGraph'),ns='http://www.w3.org/2000/svg',w=660,h=440,scale=28,cx=w/2,cy=h/2;
+ svg.replaceChildren();
+ const add=(tag,attrs)=>{let el=document.createElementNS(ns,tag);for(let [k,v] of Object.entries(attrs))el.setAttribute(k,v);svg.appendChild(el);return el};
+ const pt=(x,y)=>[cx+x*scale,cy-y*scale];
+ for(let i=-11;i<=11;i++){let [x]=pt(i,0);add('line',{x1:x,y1:0,x2:x,y2:h,stroke:'#e8edf4'});}
+ for(let i=-8;i<=8;i++){let [,y]=pt(0,i);add('line',{x1:0,y1:y,x2:w,y2:y,stroke:'#e8edf4'});}
+ add('line',{x1:0,y1:cy,x2:w,y2:cy,stroke:'#65758a','stroke-width':1.5});
+ add('line',{x1:cx,y1:0,x2:cx,y2:h,stroke:'#65758a','stroke-width':1.5});
+ for(let i=-10;i<=10;i+=2)if(i){let [x,y]=pt(i,0);let t=add('text',{x,y:cy+16,'text-anchor':'middle',fill:'#697789','font-size':11});t.textContent=i}
+ for(let i=-6;i<=6;i+=2)if(i){let [x,y]=pt(0,i);let t=add('text',{x:cx-7,y:y+4,'text-anchor':'end',fill:'#697789','font-size':11});t.textContent=i}
+ const diagonal=add('line',{x1:cx-210,y1:cy+210,x2:cx+210,y2:cy-210,stroke:'#9aa9bb','stroke-dasharray':'6 5','stroke-width':1.4});
+ const plot=(fn,min,max,color)=>{let path='',active=false;for(let i=0;i<=1200;i++){let x=min+(max-min)*i/1200,y=fn(x);let [px,py]=pt(x,y);if(!Number.isFinite(y)||py< -20||py>h+20){active=false;continue}path+=(active?'L':'M')+px.toFixed(2)+','+py.toFixed(2);active=true}add('path',{d:path,fill:'none',stroke:color,'stroke-width':3,'stroke-linecap':'round'})};
+ const even=task.n%2===0,lo=even&&task.side===1?0:-11,hi=even&&task.side===-1?0:11;
+ plot(x=>task.fun(x),even&&!task.introChosen?-11:lo,even&&!task.introChosen?11:hi,'#17212f');
+ if(introShown||forceInverse){
+  plot(y=>{const z=(y-task.v)/task.a;return task.n%2===0&&z<0?NaN:task.n%2===0?task.side*Math.pow(z,1/task.n):task.inverse(y)},-11,11,'#c72532');
+ }
+}
+$('showDomainGraph').onclick=()=>{$('domainGraphPanel').hidden=false;drawIntroGraph($('domainGraph'),true)};
+$('reveal').onclick=()=>{if(task.n%2===0&&!task.introChosen)return;introShown=true;$('introInverse').innerHTML='f̅(x) = '+inverseHTML();$('showSteps').hidden=false;drawIntroGraph();$('reveal').disabled=true};
+$('showSteps').onclick=()=>{$('stepsContent').innerHTML=inverseSolutionHTML();$('stepsDialog').showModal()};$('closeSteps').onclick=()=>$('stepsDialog').close();$('introNext').onclick=make;
+
+renderKeys();
+make();
+</script></html>
